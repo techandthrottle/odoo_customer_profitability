@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="cron_so_config" model="ir.cron">
+            <field name="name">Sale Order Data CRON Settings</field>
+            <field name="active" eval="True" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall" eval="(DateTime.now()).strftime('%Y-%m-%d 23:59:00')" />
+            <field eval="False" name="doall" />
+            <field eval="'bi_analysis.so_profitability'" name="model" />
+            <field eval="'update_so'" name="function" />
+            <field name="priority">5</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,26 @@
+<odoo>
+  <data>
+
+    <template id="assets_backend" name="edit_bi_analysis btn assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/bi_analysis/static/src/js/alter_create.js" />
+        </xpath>
+    </template>
+
+    <record id="action_view_bi_analysis_cp" model="ir.actions.act_window">
+        <field name="name">Customer Profitability</field>
+        <field name="res_model">bi_analysis.customer_profitability</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_bi_analysis_customer_profitability"/>
+    </record>
+
+<!-- TOP LEVEL MENU   -->
+    <menuitem id="menu_bi_analysis_root" name="BI Analysis" groups="base.group_user" sequence="96" web_icon="bi_analysis,static/description/bi-analysis-icon.jpg"/>
+
+    <menuitem id="menu_bi_analysis_cp" name="Customer Profitability" parent="menu_bi_analysis_root" groups="base.group_user" />
+      <menuitem id="menu_bi_analysis_sale_order" name="Sales Invoice Data" parent="menu_bi_analysis_cp" sequence="101" groups="base.group_user" action="bi_analysis.action_view_bi_analysis_so" />
+
+    <menuitem id="menu_bi_analysis_config" name="Configuration" parent="menu_bi_analysis_root" groups="base.group_user" action="bi_analysis.action_so_cron_config" />
+
+  </data>
+</odoo>

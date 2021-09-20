@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bi_analysis_bi_analysis,bi_analysis.bi_analysis,model_bi_analysis_bi_analysis,,1,0,0,0
+
+access_bi_analysis_so_profitability,bi_analysis.so_profitability,model_bi_analysis_so_profitability,base.group_user,1,1,1,1
+access_bi_analysis_so_profitability_create,bi_analysis.so_profitability.create,model_bi_analysis_so_profitability_create,base.group_user,1,1,1,1
+access_bi_analysis_so_line_profit,bi_analysis.so_line_profit,model_bi_analysis_so_line_profit,base.group_user,1,1,1,1
+access_bi_analysis_po_line_profit,bi_analysis.po_line_profit,model_bi_analysis_po_line_profit,base.group_user,1,1,1,1
+access_bi_analysis_ci_profit,bi_analysis.ci_profit,model_bi_analysis_ci_profit,base.group_user,1,1,1,1
+access_bi_analysis_vb_profit,bi_analysis.vb_profit,model_bi_analysis_vb_profit,base.group_user,1,1,1,1
+access_bi_analysis_so_cron_config,bi_analysis.so_cron_config,model_bi_analysis_so_cron_config,base.group_user,1,1,1,1

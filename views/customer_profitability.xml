@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_bi_analysis_customer_profitability" model="ir.ui.view">
+            <field name="name">bi_analysis.customer_profitability.tree</field>
+            <field name="model">bi_analysis.customer_profitability</field>
+            <field name="arch" type="xml">
+                <tree string="Customer Profitability">
+                    <field name="so_name" />
+                    <field name="cust_name" />
+                    <field name="merch_name" />
+                    <field name="sales_team_name" />
+                    <field name="project_name" />
+                    <field name="assortment_number" />
+                    <field name="assortment_description" />
+                    <field name="so_qty" />
+                    <field name="so_sales_price" />
+                    <field name="so_sub_total" />
+                    <field name="po_total_cost" />
+                    <field name="vendor_bill_cost" />
+                    <field name="invoice_date" />
+                    <field name="invoice_qty" />
+                    <field name="invoice_amount" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="bi_analysis_cp_create_form" model="ir.ui.view">
+            <field name="name">view.bi_analysis_cp_create.form</field>
+            <field name="model">bi_analysis.so.create</field>
+            <field name="arch" type="xml">
+                <form string="Sales Order">
+                    <sheet>
+<!--                        -->
+                        <field name="sales_order_ids" domain="[('module', '=', 'production'), ('state', '!=', 'draft')]">
+                            <tree editable="bottom" create="true">
+                                <field name="name" string="Sale Order ID"/>
+                                <field name="partner_id" string="Customer"/>
+                                <field name="state" invisible="1" />
+                                <field name="cp_project_id" />
+                                <field name="outstanding_amount_store" />
+                                <field name="amount_total_dollar" />
+                            </tree>
+                        </field>
+                        <footer>
+                            <button string="Create" name="close_dialog" type="object" class="btn-primary"/>
+                            <button string="Discard" class="btn-default" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+
+        </record>
+
+    </data>
+</odoo>

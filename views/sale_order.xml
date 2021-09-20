@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="bi_analysis_so_search" model="ir.ui.view">
+            <field name="name">bi_analysis_sale_order.search</field>
+            <field name="model">bi_analysis.so_profitability</field>
+            <field name="arch" type="xml">
+                <search string="Sale Order Data Filter">
+                    <field name="so_name" string="Sale Order"/>
+                    <field name="customer_name" string="Customer" />
+                    <field name="project" string="Project" />
+                    <field name="invoice_date" string="Invoice Date"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Customer" domain="[]" context="{'group_by': 'customer_name'}" />
+                        <filter string="Merchandiser" domain="[]" context="{'group_by': 'merchandiser'}" />
+                        <filter string="Project" domain="[]" context="{'group_by': 'project'}" />
+                        <filter string="Invoice Date" domain="[]" context="{'group_by': 'invoice_date'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_bi_analysis_sale_order" model="ir.ui.view">
+            <field name="name">bi_analysis.sale_order.tree</field>
+            <field name="model">bi_analysis.so_profitability</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Invoice Data">
+                    <field name="usd_currency" invisible="1"/>
+                    <field name="cny_currency" invisible="1" />
+                    <field name="so_id" />
+                    <field name="customer_id" />
+                    <field name="merchandiser_id" />
+                    <field name="sales_team_id" />
+                    <field name="project_id" />
+                    <field name="usd_cny_exchange" />
+                    <field name="cny_usd_exchange" />
+                    <field name="total_so_amount_usd" widget="monetary" options="{'currency_field': 'usd_currency'}"/>
+                    <field name="total_so_amount_cny" widget="monetary" options="{'currency_field': 'cny_currency'}"/>
+                    <field name="total_po_amount_usd" widget="monetary" options="{'currency_field': 'usd_currency'}"/>
+                    <field name="total_po_amount_cny" widget="monetary" options="{'currency_field': 'cny_currency'}"/>
+                    <field name="total_vendor_bill_usd" widget="monetary" options="{'currency_field': 'usd_currency'}"/>
+                    <field name="total_vendor_bill_cny" widget="monetary" options="{'currency_field': 'cny_currency'}"/>
+                    <field name="total_invoice_amount_usd" widget="monetary" options="{'currency_field': 'usd_currency'}"/>
+                    <field name="total_invoice_amount_cny" widget="monetary" options="{'currency_field': 'cny_currency'}"/>
+                    <field name="gross_profit_margin" />
+                    <field name="gross_profit_margin_percent"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_bi_analysis_so" model="ir.actions.act_window">
+            <field name="name">Sales Order</field>
+            <field name="res_model">bi_analysis.so_profitability</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_bi_analysis_sale_order"/>
+        </record>
+
+        <record id="view_bi_analysis_sale_order_form" model="ir.ui.view">
+            <field name="name">bi_analysis.sale_order.form</field>
+            <field name="model">bi_analysis.so_profitability</field>
+            <field name="arch" type="xml">
+                <form string="Sales Invoice Data" class="o_sale_order">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="so_name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="usd_currency" invisible="1" />
+                                <field name="cny_currency" invisible="1" />
+                                <field name="customer_id" />
+                                <field name="contact_id" />
+                                <field name="merchandiser_id" />
+                                <field name="project_id" />
+                                <field name="sales_team_id" />
+                                <field name="usd_cny_exchange" />
+                                <field name="cny_usd_exchange" />
+                                <field name="invoice_id" />
+                                <field name="invoice_date" widget="date"/>
+                            </group>
+                            <group>
+                                <field name="total_so_amount_usd" widget='monetary' options="{'currency_field': 'usd_currency'}"/>
+                                <field name="total_so_amount_cny"  widget='monetary' options="{'currency_field': 'cny_currency'}"/>
+                                <field name="total_po_amount_usd"  widget='monetary' options="{'currency_field': 'usd_currency'}"/>
+                                <field name="total_po_amount_cny" widget='monetary' options="{'currency_field': 'cny_currency'}"/>
+                                <field name="total_vendor_bill_usd"  widget='monetary' options="{'currency_field': 'usd_currency'}"/>
+                                <field name="total_vendor_bill_cny" widget='monetary' options="{'currency_field': 'cny_currency'}"/>
+                                <field name="total_invoice_amount_usd"  widget='monetary' options="{'currency_field': 'usd_currency'}"/>
+                                <field name="total_invoice_amount_cny" widget='monetary' options="{'currency_field': 'cny_currency'}"/>
+                                <field name="gross_profit_margin" />
+                                <field name="gross_profit_margin_percent" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Sale Order Line">
+                                <field name="so_line_profit_id">
+                                    <tree>
+                                        <field name="so_item_number_id" />
+                                        <field name="so_description" />
+                                        <field name="so_ppu_st" />
+                                        <field name="so_product_order_qty" />
+                                        <field name="so_assortment_order_qty" />
+                                        <field name="so_qty_invoice" />
+                                        <field name="so_product_sales_price" />
+                                        <field name="so_assortment_sales_price" />
+                                        <field name="so_price_subtotal" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Purchase Order">
+                                <field name="po_line_profit_id">
+                                    <tree>
+                                        <field name="po_name" />
+                                        <field name="po_item_number" />
+                                        <field name="po_description" />
+                                        <field name="po_partner_id" />
+                                        <field name="po_status" />
+                                        <field name="po_amount_total" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Customer Invoice">
+                                <field name="ci_line_profit_id">
+                                    <tree>
+                                        <field name="ci_cust_invoice_id" />
+                                        <field name="ci_item_number_id" />
+                                        <field name="ci_description" />
+                                        <field name="ci_account" />
+                                        <field name="ci_quantity" />
+                                        <field name="ci_unit_price" />
+                                        <field name="ci_total_amount" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Vendor Bill">
+                                <field name="vb_line_profit_id">
+                                    <tree>
+                                        <field name="vb_vendor_bill_id" />
+                                        <field name="vb_item_number_id" />
+                                        <field name="vb_item_name" />
+                                        <field name="vb_description" />
+                                        <field name="vb_quantity" />
+                                        <field name="vb_unit_price" />
+                                        <field name="vb_total_amount" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="config_view_so_cron" model="ir.ui.view">
+            <field name="name">bi_analysis_so_config_form</field>
+            <field name="model">bi_analysis.so_cron_config</field>
+            <field name="priority">99</field>
+            <field name="arch" type="xml">
+                <form string="Configuration" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight" />
+                        <button string="Cancel" type="object" name="cancel" class="oe_link" special="cancel" />
+                    </header>
+                    <group string="SALE INVOICE UPDATE SCHEDULE SETTINGS" style="width:30%%">
+                        <field name="is_active" string="Active Automatic Data Updates"/>
+                        <field name="interval_type" string="Schedule"/>
+                        <field name="exec_date" string="Scheduled Date and Time" />
+                    </group>
+                    <group string="Choose the Date Range that you want to automatically update the Sales Invoice Data">
+                        <label string="Date Range" />
+                        <div class="oe_edit_only" style="padding-bottom: 50px">
+                            <field name="si_start_date" class="oe_inline" required="1" widget="date"/>
+                            <label string=" - " class="oe_inline" />
+                            <field name="si_end_date" class="oe_inline" required="1" widget="date"/>
+                        </div>
+
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_so_cron_config" model="ir.actions.act_window">
+            <field name="name">Sale Order Data CRON JOBs Settings</field>
+            <field name="res_model">bi_analysis.so_cron_config</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="view_id" ref="config_view_so_cron" />
+        </record>
+
+        <record id="bi_analysis_so_trans_create_form" model="ir.ui.view">
+            <field name="name">view.bi_analysis_so_trans.form</field>
+            <field name="model">bi_analysis.so_profitability.create</field>
+            <field name="arch" type="xml">
+                <form string="Sales Invoice Data">
+                    <sheet>
+                        <h3>Choose the Invoice Start and End Date to be updated</h3>
+
+                        <div class="oe_edit_only" style="padding-bottom: 50px; padding-right: 10px; padding-top: 25px">
+                            <label string="Choose Date: " class="oe_inline"/>
+                            <field name="start_date" class="oe_inline" required="1" widget="date" />
+                            <label string=" - " class="oe_inline" />
+                            <field name="end_date" class="oe_inline" required="1" widget="date" />
+                        </div>
+                        <footer>
+                            <button string="Update" name="close_dialog" type="object" class="btn-primary" />
+                            <button string="Cancel" class="btn-default" special="cancel" />
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
