@@ -1,1 +1,1 @@
-# odoo_customer_profitability
+# Customer Profitability - Sales Order
